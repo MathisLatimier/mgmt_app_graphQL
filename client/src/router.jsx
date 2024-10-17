@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import Clients from "./components/Clients";
+import Clients from "./views/Clients";
 import Home from "./components/Home";
-import Projects from "./components/Projects";
+import Projects from "./views/Projects";
+import Project from "./views/Project";
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
             {
                 path: "/projects",
                 element: <Projects />
+            },
+            {
+                path: "/projects/:id",
+                element: <Project />
             }
         ]
     }

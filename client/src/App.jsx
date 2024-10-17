@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Header from './components/header'
-import Clients from './components/Clients'
+import Clients from './views/Clients'
 import { Outlet } from 'react-router-dom'
 
 

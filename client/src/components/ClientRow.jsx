@@ -3,6 +3,8 @@ import { FaTrash } from 'react-icons/fa'
 import { useMutation } from '@apollo/client'
 import { DELETE_CLIENT } from '../mutations/clientMutations'
 import { GET_CLIENTS } from '../queries/clientQueries';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 export default function ClientRow({client}) {
     const [deleteClient] = useMutation(DELETE_CLIENT, {
@@ -14,11 +16,17 @@ export default function ClientRow({client}) {
                 query: GET_CLIENTS,
                 data: {clients: clients.filter(client => client.id !== deleteClient.id)},
             });
-        }
+        },
+        onCompleted: () => {
+            // Fermer la modal après l'ajout du client
+            toast.success('User Successfully Deleted', {
+                duration: 3000
+            })
+        },
+
     });
 
     const onDeleteClient = () => {
-
     }
 
     return (
