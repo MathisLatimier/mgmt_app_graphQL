@@ -26,7 +26,7 @@ export default function Home() {
       <section>
         <h2 className="text-3xl font-medium mb-6">Top Projects</h2>
         {projects.length > 0 ? (
-          <div className="grid grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-3 gap-10">
             {get3RandomProjects(projects).map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}

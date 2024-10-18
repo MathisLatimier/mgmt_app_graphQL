@@ -15,7 +15,7 @@ export default function Client() {
     if (error) return <div>A problem occurred</div>
 
   return (
-    <div className="grid grid-cols-2 gap-10">
+    <div className="grid md:grid-cols-2 gap-10">
         <section className="border rounded-xl p-10">
             <h2 className="text-3xl mb-6">Detail</h2>
             <div className="flex flex-col gap-4">
@@ -33,14 +33,17 @@ export default function Client() {
                 </div>
             </div>
         </section>
-        <section className="border rounded-xl p-10">
-            <h2 className="text-3xl mb-6">Projects</h2>
-            <div className="grid grid-cols-2 gap-4">
-                {data.client.projects.map((project) => (
-                    <ProjectCard project={project} key={project.id}/>
-                ))}
-            </div>
-        </section>
+        {data.client.projects.length > 0 && (
+            <section className="border rounded-xl p-10">
+                <h2 className="text-3xl mb-6">Projects</h2>
+                <div className="grid lg:grid-cols-2 gap-4">
+                    {data.client.projects.map((project) => (
+                        <ProjectCard project={project} key={project.id}/>
+                    ))}
+                </div>
+            </section>
+        )}
+        
     </div>
   )
 }
