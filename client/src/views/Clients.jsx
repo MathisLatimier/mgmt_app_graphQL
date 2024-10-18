@@ -2,9 +2,9 @@ import { gql, useQuery } from "@apollo/client"
 import ClientRow from "../components/ClientRow"
 import { GET_CLIENTS } from "../queries/clientQueries"
 import Spinner from "../components/Spinner"
-import AddUser from "../components/modals/AddUser"
+import AddClient from "../components/modals/AddClient"
 import { useState } from "react"
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { FaUser } from "react-icons/fa6";
 
 
@@ -16,20 +16,19 @@ export default function Clients() {
     if (error) return <p>Something Went Wrong</p>
 
     const onSuccessAdd = () => {
-        toast.success('User Successfully Created', {
+        toast.success('Client Successfully Created', {
             duration: 3000
         })
         setIsModalOpen(false)
     }
     return (
     <>
-    <Toaster />
-    <button onClick={() => setIsModalOpen(true)} className="bg-pink-500/60 text-white px-4 py-2 rounded-xl mb-4 hover:bg-pink-500/75 flex items-center">
+    <button onClick={() => setIsModalOpen(true)} className="bg-pink-500/60 text-white px-4 py-2 rounded-xl mb-4 hover:bg-pink-500/75 flex items-center duration-150 active:scale-95">
         <FaUser className="mr-2"/>
         <span>Add Client</span>
     </button>
     {isModalOpen && (
-        <AddUser onClose={setIsModalOpen} onSuccess={onSuccessAdd}/>
+        <AddClient onClose={setIsModalOpen} onSuccess={onSuccessAdd}/>
     )}
     {!loading && !error && (
         <div style={{ maxHeight: '80vh', overflow: 'auto' }} className="rounded-xl shadow-lg">

@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { FaXmark } from 'react-icons/fa6'
 import { ADD_CLIENT } from '../../mutations/clientMutations';
 import { GET_CLIENTS } from '../../queries/clientQueries';
-import { empty } from '@apollo/client';
 import { useMutation } from '@apollo/client';
+import './modals.css'
 
-export default function AddUser({onClose, onSuccess}) {
+export default function AddClient({onClose, onSuccess}) {
     const [data, setData] = useState({
         name: "",
         email: "",
@@ -44,11 +44,11 @@ export default function AddUser({onClose, onSuccess}) {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const phoneRegex = /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/;
         console.log(data)
-        if (!data.name && empty(data.name)) {
+        if (!data.name || data.name.trim() === "") {
             setError('Please enter a name')
             return;
         }
-        if (!data.email && empty(data.email)) {
+        if (!data.email || data.email.trim() === "") {
             setError('Please enter an email')
             return;
         }
@@ -56,7 +56,7 @@ export default function AddUser({onClose, onSuccess}) {
             setError('Please enter a valid email')
             return;
         }
-        if (!data.phone && empty(data.phone)) {
+        if (!data.phone || data.phone.trim() === "") {
             setError('Please enter a phone number')
             return;
         }        
@@ -70,7 +70,7 @@ export default function AddUser({onClose, onSuccess}) {
     }
     return (
         <div onClick={() => onClose(false)} className='absolute top-0 right-0 left-0 bottom-0 bg-black/25 z-20' >
-            <div onClick={handleClickInside} className='absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 bg-white p-14 rounded-xl shadow-xl'>
+            <div onClick={handleClickInside} className='absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 bg-white p-14 rounded-xl shadow-xl lg:w-1/3 w-11/12'>
                 <div className='flex justify-between items-start mb-4'>
                     <h1 className='text-2xl'>Add A Client</h1>
                     <button onClick={() => onClose(false)} className=''><FaXmark className='h-6' /></button>
@@ -79,7 +79,7 @@ export default function AddUser({onClose, onSuccess}) {
                 {error && (
                     <p className='text-white bg-red-400/75 p-2 border-2 rounded-md border-red-400'>{error}</p>
                 )}
-                <form className='flex flex-col gap-4 w-72' onSubmit={onAdd}>
+                <form className='flex flex-col gap-4' onSubmit={onAdd}>
                     <label htmlFor="name" className='flex flex-col'>
                         Name
                         <input onChange={handleChange} type="text" name='name' placeholder='Name' className='p-2 border border-pink-300/50 rounded-md bg-pink-100/25 focus:bg-white'/>
@@ -92,7 +92,7 @@ export default function AddUser({onClose, onSuccess}) {
                         Phone
                         <input onChange={handleChange} type="text" name='phone' placeholder='Phone' className='p-2 border border-pink-300/50 rounded-md bg-pink-100/25 focus:bg-white'/>
                     </label>
-                    <button className='bg-pink-500/60 text-white px-4 py-2 rounded-xl mb-4 hover:bg-pink-500/75 font-medium'>Add</button>
+                    <button className='bg-pink-500/60 text-white px-4 py-2 rounded-xl mb-4 hover:bg-pink-500/75 font-medium duration-150 active:scale-95'>Add</button>
                 </form>
             </div>
         </div>

@@ -14,6 +14,12 @@ const ClientType = new GraphQLObjectType({
         name: { type: GraphQLString },
         email: { type: GraphQLString },
         phone: { type: GraphQLString },
+        projects: {
+            type: new GraphQLList(ProjectType),
+            resolve(parent, args) {
+                return Project.find({clientId: parent.id});
+            }
+        }
     })
 })
 
@@ -95,7 +101,13 @@ const Mutation = new GraphQLObjectType({
             args: {
                 id: {type: GraphQLNonNull(GraphQLID)}
             },
-            resolve(parent, args) {
+            async resolve(parent, args) {
+                const projects = await Project.find({ clientId: args.id });
+        
+                await Promise.all(
+                    projects.map(project => Project.deleteOne({ _id: project._id }))
+                );
+        
                 return Client.findByIdAndDelete(args.id);
             }
         },
