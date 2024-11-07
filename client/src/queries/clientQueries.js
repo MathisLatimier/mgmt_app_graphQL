@@ -24,6 +24,9 @@ const GET_CLIENT = gql `
                 name
                 description
                 status
+                client {
+                    id
+                }
             }
         }
     }

@@ -27,16 +27,6 @@ export default function EditProject() {
     const [updateProject] = useMutation(UPDATE_PROJECT, {
         variables: {id: id, name: project.name, description: project.description, status: project.status},
         refetchQueries: [{query: GET_PROJECT, variables: {id: id}}],
-        update(cache, {data: {updateProject}}) {
-            const {projects} = cache.readQuery({query: GET_PROJECTS});
-            const updatedProjects = projects.map((p) => 
-                p.id === id ? { ...p, ...updateProject } : p
-            );
-            cache.writeQuery({
-                query: GET_PROJECTS,
-                data: { projects: updatedProjects },
-            });
-        },
         onCompleted: () => {
             // Fermer la modal après l'ajout du client
             navigate('./..')

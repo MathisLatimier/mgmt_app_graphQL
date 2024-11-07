@@ -4,19 +4,21 @@ import { useMutation } from "@apollo/client";
 import { DELETE_PROJECT } from "../mutations/projectMutation";
 import { GET_PROJECTS } from "../queries/projectQueries";
 import toast from 'react-hot-toast';
+import { GET_CLIENT } from "../queries/clientQueries";
 
 
 export default function ProjectCard({project}) {
 
     const [deleteProject] = useMutation(DELETE_PROJECT, {
         variables: {id: project.id},
-        update(cache, {data: {deleteProject}}) {
-            const {projects} = cache.readQuery({query: GET_PROJECTS});
-            cache.writeQuery({
-                query: GET_PROJECTS,
-                data: {projects: projects.filter(project => project.id !== deleteProject.id)},
-            });
-        },
+        refetchQueries: [{query: GET_CLIENT, variables: {id: project.client.id}}],
+        // update(cache, {data: {deleteProject}}) {
+        //     const {projects} = cache.readQuery({query: GET_PROJECTS});
+        //     cache.writeQuery({
+        //         query: GET_PROJECTS,
+        //         data: {projects: projects.filter(project => project.id !== deleteProject.id)},
+        //     });
+        // },
         onCompleted: () => {
             toast.success('Project Successfully Deleted', {
                 duration: 3000
@@ -45,7 +47,7 @@ export default function ProjectCard({project}) {
                 <div className="mt-4">Status : <span className={project.status === "Completed" ? "text-green-400" : project.status === "Not Started" ? "text-red-500" : "text-yellow-500"}>{project.status} </span></div>
             </div>
             <div className="flex justify-between mt-4">
-                <button onClick={deleteProject} className="rounded-full px-4 py-2 bg-red-400 hover:bg-red-500"><FaTrash className='text-white'/></button>
+                <button onClick={deleteProject} title='Delete Project' className="rounded-full px-4 py-2 bg-red-400 hover:bg-red-500"><FaTrash className='text-white'/></button>
 
                 <Link to={`/projects/${project.id}`} className="bg-pink-500/60 text-white px-4 py-2 rounded-xl hover:bg-pink-500/75 flex items-center w-fit ">View</Link>
 

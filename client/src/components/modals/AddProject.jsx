@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FaXmark } from "react-icons/fa6";
 import { GET_CLIENT, GET_CLIENTS } from "../../queries/clientQueries";
 import { useQuery, useMutation } from "@apollo/client";
@@ -33,6 +33,11 @@ export default function AddProject({onClose, onSuccess}) {
         },
         
     });
+
+    useEffect(() => {
+        const modal = document.getElementById("parent-modal");
+        modal.style.transform = "scale(1)"
+    }, [])
 
     const handleClickInside = (e) => {
         e.stopPropagation(); // Empêche la propagation du clic au parent
@@ -71,7 +76,7 @@ export default function AddProject({onClose, onSuccess}) {
         addProject()
     }
     return (
-        <div onClick={() => onClose(false)} className='absolute top-0 right-0 left-0 bottom-0 bg-black/25 z-20' >
+        <div onClick={() => onClose(false)} id="parent-modal" className='absolute top-0 right-0 left-0 bottom-0 bg-black/25 z-20 duration-200' style={{transform: "scale(0)", transition: "transform 0.3s ease-in-out"}}>
             <div onClick={handleClickInside} className='absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 bg-white p-14 rounded-xl shadow-xl lg:w-1/3 w-11/12 '>
                 <div className='flex justify-between items-start mb-4'>
                     <h1 className='text-2xl'>Add A project</h1>
