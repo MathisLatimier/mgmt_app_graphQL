@@ -9,3 +9,7 @@
 .modal-fade.out {
     opacity: 0;
 }
+
+main {
+    min-height: calc(100vh - 72px);
+}
